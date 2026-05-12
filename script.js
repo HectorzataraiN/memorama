@@ -38,7 +38,9 @@ const cards = [
   { id: "js", title: "Lisa", image: "assets/lisa.png", position: "45% 0%", offsetY: "-25px" },
   { id: "ui", title: "Valentina", image: "assets/vale.png", size: "130%", position: "45% -30%", offsetY: "-30px" },
   { id: "api", title: "Lia", image: "assets/lia.png", position: "45% 0%", offsetY: "-16px", size: "80%" },
-  { id: "git", title: "Abuelos", image: "assets/abuelos.png", size: "120%" }
+  { id: "git", title: "Abuelos", image: "assets/abuelos.png", size: "120%" },
+  { id: "axel", title: "Axel", image: "assets/axel-vale.png", size: "115%" },
+  { id: "peluche", title: "Peluche", image: "assets/peluche.png", size: "80%", offsetY: "-35px" }
 ];
 
 // Configuracion de cada dificultad.
