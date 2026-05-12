@@ -1,0 +1,502 @@
+:root {
+  /* Variables globales de color y sombra para reutilizar en todo el CSS. */
+  --bg: #10151f;
+  --panel: #f8f6ef;
+  --panel-strong: #ffffff;
+  --ink: #17202e;
+  --muted: #687386;
+  --line: rgba(23, 32, 46, 0.14);
+  --accent: #2f8f83;
+  --accent-dark: #20695f;
+  --danger: #d95f4f;
+  --card-back: #273245;
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+/* Hace que el padding y el borde no aumenten el tamaño final de los elementos. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  /* Ocupa como minimo toda la altura de la pantalla. */
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+
+  /* Fondo decorativo con un brillo radial y un degradado. */
+  background:
+    radial-gradient(circle at top left, rgba(47, 143, 131, 0.22), transparent 34rem),
+    linear-gradient(135deg, #10151f 0%, #202534 52%, #163b3f 100%);
+}
+
+/* Los botones usan la misma fuente que el resto de la pagina. */
+button {
+  font: inherit;
+}
+
+.app {
+  /* Contenedor principal: limita el ancho y centra todo. */
+  width: min(1120px, calc(100% - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+
+  /* Divide la pagina en dos columnas: juego y panel lateral. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: center;
+  padding: 32px 0;
+}
+
+.game-shell,
+.side-panel {
+  /* Estilo compartido para las dos cajas principales. */
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow);
+}
+
+.game-shell {
+  /* Caja donde esta el tablero. */
+  border-radius: 8px;
+  padding: clamp(18px, 3vw, 32px);
+}
+
+.side-panel {
+  /* Caja lateral con el texto del objetivo. */
+  border-radius: 8px;
+  padding: 24px;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.game-header {
+  /* Coloca el titulo a la izquierda y el boton a la derecha. */
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  /* Texto pequeno arriba del titulo. */
+  margin: 0 0 8px;
+  color: var(--accent-dark);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  /* Titulo principal responsive. */
+  margin-bottom: 0;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 0.95;
+}
+
+h2 {
+  margin-bottom: 10px;
+  font-size: 1.45rem;
+}
+
+.side-panel p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.player-form {
+  /* Espacio del formulario donde el usuario registra su nombre. */
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.player-form label {
+  /* Etiqueta del input de nombre. */
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.player-form-row {
+  /* Coloca el input y el boton en la misma fila. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.player-form input {
+  /* Campo donde el usuario escribe su nombre. */
+  min-height: 44px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--ink);
+  background: #ffffff;
+  font: inherit;
+}
+
+.current-player {
+  /* Texto que muestra quien esta jugando actualmente. */
+  margin: 14px 0 0;
+  font-weight: 700;
+}
+
+.leaderboard {
+  /* Caja de records dentro del panel lateral. */
+  margin-top: 18px;
+}
+
+.leaderboard h3 {
+  /* Titulo pequeno de la lista de records. */
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.leaderboard ol {
+  /* Lista numerada de mejores puntuaciones. */
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.restart-button {
+  /* Boton de reiniciar y boton de jugar otra vez. */
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 18px;
+  color: #ffffff;
+  background: var(--accent);
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 160ms ease, background 160ms ease;
+}
+.restart-button:hover {
+  /* Efecto al pasar el mouse por encima. */
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
+.skip-button {
+  /* Boton secundario para omitir el registro. */
+  min-height: 44px;
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.skip-button:hover {
+  /* Cambio suave al pasar el mouse. */
+  background: #f0eee7;
+}
+
+.restart-button:focus-visible,
+.card:focus-visible {
+  /* Borde visible para navegacion con teclado. */
+  outline: 3px solid rgba(47, 143, 131, 0.36);
+  outline-offset: 3px;
+}
+
+.stats {
+  /* Panel de movimientos, parejas y tiempo. */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.stats article {
+  /* Caja individual de cada estadistica. */
+  min-height: 74px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel-strong);
+}
+
+.stats span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.stats strong {
+  display: block;
+  margin-top: 6px;
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+}
+
+.difficulty-panel {
+  /* Panel donde el jugador elige la dificultad. */
+  display: grid;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.difficulty-panel span {
+  /* Texto pequeno que etiqueta el selector de dificultad. */
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.difficulty-buttons {
+  /* Agrupa los tres botones de dificultad. */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.difficulty-button {
+  /* Boton individual de dificultad. */
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.difficulty-button.is-active {
+  /* Dificultad seleccionada actualmente. */
+  color: #ffffff;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.board {
+  /* Tablero de cartas en 4 columnas para escritorio. */
+  display: grid;
+  grid-template-columns: repeat(4, minmax(72px, 1fr));
+  gap: clamp(10px, 2vw, 16px);
+}
+
+.board.board-easy {
+  /* Facil: 12 cartas, 4 columnas. */
+  grid-template-columns: repeat(4, minmax(72px, 1fr));
+}
+
+.board.board-medium {
+  /* Medio: 16 cartas, 4 columnas. */
+  grid-template-columns: repeat(4, minmax(72px, 1fr));
+}
+
+.board.board-hard {
+  /* Dificil: 20 cartas, 5 columnas. */
+  grid-template-columns: repeat(5, minmax(64px, 1fr));
+}
+
+.card {
+  /* Cada carta es un boton cuadrado. */
+  position: relative;
+  aspect-ratio: 1;
+  border: 0;
+  padding: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+
+  /* Da profundidad al giro 3D de la carta. */
+  perspective: 900px;
+}
+.card-image {
+  /* Estilo base de las imagenes dentro de las cartas. */
+  width: 102%;
+  height: 102%;
+
+  /* cover llena la carta, aunque puede recortar un poco la imagen. */
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  display: block;
+}
+
+.card.is-disabled {
+  cursor: default;
+}
+
+.card-inner {
+  /* Capa que contiene el frente y reverso, y es la que gira. */
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform 360ms ease;
+}
+
+.card.is-flipped .card-inner,
+.card.is-matched .card-inner {
+  /* Cuando una carta se voltea, se rota 180 grados. */
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  /* Estilo comun de las dos caras de la carta. */
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  display: grid;
+  place-items: center;
+
+  /* Oculta la parte trasera de cada cara durante el giro. */
+  backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.card-back {
+  /* Cara trasera de la carta, donde aparece el signo de pregunta. */
+  color: #ffffff;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent),
+    var(--card-back);
+  font-size: clamp(1.6rem, 6vw, 2.8rem);
+  font-weight: 800;
+}
+
+.card-front {
+  /* Cara frontal de la carta, donde va la imagen. */
+  padding: 10px;
+  color: #ffffff;
+  background: var(--accent);
+
+  /* La cara frontal empieza girada para verse bien cuando la carta se voltea. */
+  transform: rotateY(180deg);
+}
+
+.card.is-matched .card-front {
+  /* Color de fondo cuando una carta ya encontro su pareja. */
+  background: var(--danger);
+}
+
+.card-label {
+  /* Centra el contenido dentro de la carta. */
+  display: grid;
+  gap: 6px;
+  place-items: center;
+  text-align: center;
+}
+
+.card-label strong {
+  font-size: clamp(1.2rem, 4vw, 2rem);
+}
+
+.card-label span {
+  font-size: clamp(0.68rem, 1.8vw, 0.85rem);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tips {
+  /* Contenedor de etiquetas del panel lateral. */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.tips span {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 10px;
+  background: #ffffff;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.win-dialog,
+.register-dialog {
+  /* Ventana emergente que aparece al ganar. */
+  width: min(420px, calc(100% - 32px));
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  color: var(--ink);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.win-dialog::backdrop,
+.register-dialog::backdrop {
+  /* Oscurece el fondo cuando el modal esta abierto. */
+  background: rgba(16, 21, 31, 0.68);
+}
+
+.dialog-content {
+  padding: 28px;
+}
+
+.dialog-content h2 {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+.dialog-content p:not(.eyebrow) {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 860px) {
+  /* En pantallas medianas, el panel lateral pasa debajo del juego. */
+  .app {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .side-panel {
+    align-self: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Ajustes para celular. */
+  .app {
+    width: min(100% - 20px, 1120px);
+    padding: 10px 0;
+  }
+
+  .game-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .restart-button {
+    width: 100%;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .difficulty-buttons {
+    /* En celular mantenemos los botones de dificultad compactos. */
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .board.board-easy,
+  .board.board-medium,
+  .board.board-hard {
+    /* En celular usamos 3 columnas para que las cartas no queden tan pequenas. */
+    grid-template-columns: repeat(3, minmax(72px, 1fr));
+  }
+}

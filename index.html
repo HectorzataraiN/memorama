@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Configuracion basica del documento y adaptacion a pantallas pequenas. -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memorama</title>
+
+  <!-- Conecta el archivo CSS con esta pagina. -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Contenedor principal de la aplicacion. -->
+  <main class="app">
+    <!-- Seccion principal del juego. -->
+    <section class="game-shell" aria-labelledby="game-title">
+      <!-- Encabezado con titulo y boton de reinicio. -->
+      <div class="game-header">
+        <div>
+          <p class="eyebrow">Mini juego web</p>
+          <h1 id="game-title">Memorama</h1>
+        </div>
+
+        <!-- JavaScript usa este id para reiniciar la partida. -->
+        <button class="restart-button" id="restartButton" type="button">
+          Reiniciar
+        </button>
+      </div>
+
+      <!-- Estadisticas que se actualizan desde JavaScript. -->
+      <div class="stats" aria-label="Estadisticas de la partida">
+        <article>
+          <span>Movimientos</span>
+          <strong id="moves">0</strong>
+        </article>
+        <article>
+          <span>Parejas</span>
+          <strong><span id="matches">0</span>/<span id="totalPairs">6</span></strong>
+        </article>
+        <article>
+          <span>Tiempo</span>
+          <strong id="timer">00:00</strong>
+        </article>
+        <article>
+          <span>Mejor</span>
+          <!-- JavaScript mostrara aqui la mejor puntuacion guardada en este navegador. -->
+          <strong id="bestScore">--</strong>
+        </article>
+      </div>
+
+      <!-- Selector de dificultad del juego. -->
+      <div class="difficulty-panel" aria-label="Selector de dificultad">
+        <span>Dificultad</span>
+        <div class="difficulty-buttons">
+          <button class="difficulty-button is-active" type="button" data-difficulty="easy">Fácil</button>
+          <button class="difficulty-button" type="button" data-difficulty="medium">Medio</button>
+          <button class="difficulty-button" type="button" data-difficulty="hard">Difícil</button>
+        </div>
+      </div>
+
+      <!-- JavaScript inserta aqui todas las cartas del memorama. -->
+      <div class="board" id="board" aria-label="Tablero de cartas"></div>
+    </section>
+
+    <!-- Panel lateral con texto de apoyo para el jugador. -->
+    <section class="side-panel" aria-label="Informacion del juego">
+      <h2>Objetivo</h2>
+      <p>Que onda Chavacuana, te reto a terminarlo en menos de 30 s o ¿estás muy bot? jijiji.</p>
+
+      <!-- Aqui se muestra el jugador que esta usando el memorama. -->
+      <p class="current-player" id="currentPlayer">Jugador: sin registrar</p>
+
+      <!-- Lista donde JavaScript mostrara los mejores records por usuario. -->
+      <div class="leaderboard">
+        <h3>Mejores records</h3>
+        <ol id="leaderboardList"></ol>
+      </div>
+
+      <!-- Este bloque esta comentado, por eso no se muestra en pantalla. -->
+      <!--<div class="tips">
+        <span>Responsive</span>
+        <span>Animaciones</span>
+        <span>JavaScript puro</span>
+      </div>-->
+    </section>
+  </main>
+
+  <!-- Modal inicial para registrar el nombre antes de jugar. -->
+  <dialog class="register-dialog" id="registerDialog">
+    <div class="dialog-content">
+      <p class="eyebrow">Antes de jugar</p>
+      <h2>Registra tu nombre</h2>
+      <p>Asi tu mejor record queda guardado en la tabla del juego.</p>
+
+      <!-- Formulario para registrar el nombre del jugador. -->
+      <form class="player-form" id="playerForm">
+        <label for="playerName">Tu nombre</label>
+        <div class="player-form-row">
+          <input id="playerName" name="playerName" type="text" maxlength="18" placeholder="Ej. Vale" required>
+          <button class="restart-button" type="submit">Empezar</button>
+        </div>
+      </form>
+
+      <!-- Permite jugar sin guardar record con nombre. -->
+      <button class="skip-button" id="skipRegisterButton" type="button">Omitir por ahora</button>
+    </div>
+  </dialog>
+
+  <!-- Modal que aparece cuando el jugador gana. -->
+  <dialog class="win-dialog" id="winDialog">
+    <div class="dialog-content">
+      <p class="eyebrow">Partida completada</p>
+      <h2>Ganaste</h2>
+
+      <!-- JavaScript escribe aqui los movimientos y el tiempo final. -->
+      <p id="finalScore"></p>
+
+      <!-- Boton para cerrar el modal y empezar otra partida. -->
+      <button class="restart-button" id="playAgainButton" type="button">
+        Jugar otra vez
+      </button>
+    </div>
+  </dialog>
+
+  <!-- Conecta el JavaScript. Va al final para que primero cargue el HTML. -->
+  <script src="script.js"></script>
+</body>
+</html>
